@@ -1,21 +1,45 @@
 import React from "react";
 
-const Buttons = () => {
+const Buttons = ({
+  cities,
+  setCity,
+  activeButton,
+  setActiveButton,
+  getCurrentLocation,
+}) => {
   return (
     <div>
-      <div className="flex gap-5">
-        <button className="bg-[#0a192f] text-[#64FFDA] rounded-full w-auto h-10 cursor-pointer px-5">
+      <div className="flex flex-wrap justify-center gap-2">
+        <button
+          className={`rounded-xl w-auto h-10 cursor-pointer px-5 text-sm md:text-lg ${
+            activeButton === "current"
+              ? "bg-[#64FFDA] text-[#0A192F]"
+              : "bg-[#0A192F] text-[#64FFDA]"
+          }`}
+          onClick={() => {
+            setActiveButton("current");
+            getCurrentLocation();
+          }}
+        >
           Current Location
         </button>
-        <button className="bg-[#0a192f] text-[#64FFDA] rounded-full w-auto h-10 cursor-pointer px-5">
-          Sapporo
-        </button>
-        <button className="bg-[#0a192f] text-[#64FFDA] rounded-full w-auto h-10 cursor-pointer px-5">
-          Singapore
-        </button>
-        <button className="bg-[#0a192f] text-[#64FFDA] rounded-full w-auto h-10 cursor-pointer px-5">
-          Hawaii
-        </button>
+
+        {cities.map((city, index) => (
+          <button
+            key={index}
+            className={`rounded-xl w-auto h-10 cursor-pointer px-5 text-sm md:text-lg ${
+              activeButton === index
+                ? "bg-[#64FFDA] text-[#0A192F]"
+                : "bg-[#0A192F] text-[#64FFDA]"
+            }`}
+            onClick={() => {
+              setCity(city);
+              setActiveButton(index);
+            }}
+          >
+            {city}
+          </button>
+        ))}
       </div>
     </div>
   );
